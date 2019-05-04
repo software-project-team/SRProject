@@ -10,8 +10,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yunuscagliyan.socialreader.R;
 import com.yunuscagliyan.socialreader.Utils.BottomNavigationViewHelper;
+import com.yunuscagliyan.socialreader.Utils.SectionPagerAdapter;
+import com.yunuscagliyan.socialreader.Utils.UniversalImageLoader;
 
 public class HomeActivity extends AppCompatActivity {
     private static final String TAG = "HomeActivity";
@@ -23,10 +26,14 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Log.d(TAG,"onCreate starting");
+        initImageLoader();
         setupBottomNavigationView();
         setupViewPager();
     }
-
+    private void initImageLoader(){
+        UniversalImageLoader universalImageLoader = new UniversalImageLoader(mContext);
+        ImageLoader.getInstance().init(universalImageLoader.getConfig());
+    }
     /**
      * Responsible adding three tabs:Camera,Home,Messages
      */
@@ -59,8 +66,6 @@ public class HomeActivity extends AppCompatActivity {
         Menu menu=bottomNavViewBar.getMenu();
         MenuItem menuItem=menu.getItem(ACTIVITY_NUMBER);
         menuItem.setChecked(true);
-
-
 
     }
 }

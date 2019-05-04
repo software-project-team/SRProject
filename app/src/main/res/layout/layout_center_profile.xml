@@ -82,7 +82,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/website"
                     android:textSize="16sp"
-                    android:textColor="@color/blue"
+                    android:textColor="@color/link_blue"
                     android:text="htttp://www.gazi.edu.tr"
                     android:layout_marginTop="5dp"/>
 

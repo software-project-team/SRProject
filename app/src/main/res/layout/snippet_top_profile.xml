@@ -85,7 +85,7 @@
             android:layout_width="131dp"
             android:layout_height="21dp"
             android:layout_marginTop="40dp"
-            android:background="@drawable/gray_border"
+            android:background="@drawable/grey_border"
             android:text="Edit Your Profile"
             android:textAlignment="center"
             android:textColor="@color/black"
