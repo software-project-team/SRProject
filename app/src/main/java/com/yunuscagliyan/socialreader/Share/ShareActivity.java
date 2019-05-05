@@ -18,7 +18,6 @@ import com.yunuscagliyan.socialreader.Utils.BottomNavigationViewHelper;
 import com.yunuscagliyan.socialreader.Utils.Permissions;
 import com.yunuscagliyan.socialreader.Utils.SectionsPagerAdapter;
 
-
 public class ShareActivity extends AppCompatActivity{
     private static final String TAG = "ShareActivity";
 
@@ -51,7 +50,6 @@ public class ShareActivity extends AppCompatActivity{
     public int getCurrentTabNumber(){
         return mViewPager.getCurrentItem();
     }
-
     /**
      * setup viewpager for manager the tabs
      */
@@ -77,7 +75,6 @@ public class ShareActivity extends AppCompatActivity{
         Log.d(TAG, "getTask: TASK: " + getIntent().getFlags());
         return getIntent().getFlags();
     }
-
     /**
      * verifiy all the permissions passed to the array
      * @param permissions
