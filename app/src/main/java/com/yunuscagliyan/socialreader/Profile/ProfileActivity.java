@@ -10,57 +10,107 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-
+import android.widget.TextView;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.yunuscagliyan.socialreader.R;
 import com.yunuscagliyan.socialreader.Utils.BottomNavigationViewHelper;
+import com.yunuscagliyan.socialreader.Utils.GridImageAdapter;
+import com.yunuscagliyan.socialreader.Utils.UniversalImageLoader;
 
-public class ProfileActivity extends AppCompatActivity {
+import java.util.ArrayList;
+
+
+public class ProfileActivity extends AppCompatActivity{
     private static final String TAG = "ProfileActivity";
-    private final Context mContext=ProfileActivity.this;
-    private static final int ACTIVITY_NUMBER=4;
+    private static final int ACTIVITY_NUM = 4;
+    private static final int NUM_GRID_COLUMNS = 3;
 
+    private Context mContext = ProfileActivity.this;
     private ProgressBar mProgressBar;
+    private ImageView profilePhoto;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-        Log.d(TAG,"onCreate:started");
-        mProgressBar=findViewById(R.id.profileProgressBar);
-        mProgressBar.setVisibility(View.GONE);
+        Log.d(TAG, "onCreate: started.");
+
         setupBottomNavigationView();
         setupToolbar();
+        setupActivityWidgets();
+        setProfileImage();
+        tempGridSetup();
+    }
+    private void tempGridSetup(){
+        ArrayList<String> imgURLs = new ArrayList<>();
+        imgURLs.add("https://i.redd.it/9bf67ygj710z.jpg");
+        imgURLs.add("https://i.redd.it/59kjlxxf720z.jpg");
+        imgURLs.add("https://i.redd.it/pwduhknig00z.jpg");
+        imgURLs.add("https://i.redd.it/clusqsm4oxzy.jpg");
+        imgURLs.add("https://i.redd.it/svqvn7xs420z.jpg");
+        imgURLs.add("http://i.imgur.com/j4AfH6P.jpg");
+        imgURLs.add("https://i.redd.it/89cjkojkl10z.jpg");
+        imgURLs.add("https://i.redd.it/aw7pv8jq4zzy.jpg");
+
+        setupImageGrid(imgURLs);
     }
 
+    private void setupImageGrid(ArrayList<String> imgURLs){
+        GridView gridView = (GridView) findViewById(R.id.gridView);
 
-    public void setupToolbar(){
-        Toolbar mToolbar=findViewById(R.id.profileToolBar);
-        mToolbar.setTitle("");
-        setSupportActionBar(mToolbar);
-        ImageView profileMenu=findViewById(R.id.profileMenu);
+        int gridWidth = getResources().getDisplayMetrics().widthPixels;
+        int imageWidth = gridWidth/NUM_GRID_COLUMNS;
+        gridView.setColumnWidth(imageWidth);
+
+        GridImageAdapter adapter = new GridImageAdapter(mContext, R.layout.layout_grid_imageview, "", imgURLs);
+        gridView.setAdapter(adapter);
+    }
+
+    private void setProfileImage(){
+        Log.d(TAG, "setProfileImage: setting profile photo.");
+        String imgURL = "www.androidcentral.com/sites/androidcentral.com/files/styles/xlarge/public/article_images/2016/08/ac-lloyd.jpg?itok=bb72IeLf";
+        UniversalImageLoader.setImage(imgURL, profilePhoto, mProgressBar, "https://");
+    }
+
+    private void setupActivityWidgets(){
+        mProgressBar = (ProgressBar) findViewById(R.id.profileProgressBar);
+        mProgressBar.setVisibility(View.GONE);
+        profilePhoto = (ImageView) findViewById(R.id.profile_photo);
+
+    }
+
+    /**
+     * Responsible for setting up the profile toolbar
+     */
+    private void setupToolbar(){
+        Toolbar toolbar = (Toolbar) findViewById(R.id.profileToolBar);
+        setSupportActionBar(toolbar);
+
+        ImageView profileMenu = (ImageView) findViewById(R.id.profileMenu);
         profileMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG,"onClick: navigating to AccountSettingActivity");
-                Intent intent=new Intent(mContext,AccountSettingActivity.class);
+                Log.d(TAG, "onClick: navigating to account settings.");
+                Intent intent = new Intent(mContext, AccountSettingActivity.class);
                 startActivity(intent);
             }
         });
     }
+
     /**
-     * BottomNavigationView set up
+     * BottomNavigationView setup
      */
     private void setupBottomNavigationView(){
-        Log.d(TAG,"setupBottomNavigationView:setting up BottomNavigationView");
-        BottomNavigationViewEx bottomNavViewBar=findViewById(R.id.bottomNavViewBar);
-        BottomNavigationViewHelper.setupBottomNavigationView(bottomNavViewBar);
-        BottomNavigationViewHelper.enableNavigation(mContext,bottomNavViewBar);
-
-        Menu menu=bottomNavViewBar.getMenu();
-        MenuItem menuItem=menu.getItem(ACTIVITY_NUMBER);
+        Log.d(TAG, "setupBottomNavigationView: setting up BottomNavigationView");
+        BottomNavigationViewEx bottomNavigationViewEx = (BottomNavigationViewEx) findViewById(R.id.bottomNavViewBar);
+        BottomNavigationViewHelper.setupBottomNavigationView(bottomNavigationViewEx);
+        BottomNavigationViewHelper.enableNavigation(mContext, bottomNavigationViewEx);
+        Menu menu = bottomNavigationViewEx.getMenu();
+        MenuItem menuItem = menu.getItem(ACTIVITY_NUM);
         menuItem.setChecked(true);
-
     }
+
 }

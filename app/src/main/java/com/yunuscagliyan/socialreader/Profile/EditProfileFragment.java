@@ -26,9 +26,7 @@ public class EditProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_editprofile, container, false);
         mProfilePhoto = (ImageView) view.findViewById(R.id.profile_photo);
 
-
         setProfileImage();
-
         //back arrow for navigating back to "ProfileActivity"
         ImageView backArrow = (ImageView) view.findViewById(R.id.backArrow);
         backArrow.setOnClickListener(new View.OnClickListener() {
@@ -41,9 +39,7 @@ public class EditProfileFragment extends Fragment {
 
         return view;
     }
-
-
-
+    
     private void setProfileImage(){
         Log.d(TAG, "setProfileImage: setting profile image.");
         String imgURL = "www.androidcentral.com/sites/androidcentral.com/files/styles/xlarge/public/article_images/2016/08/ac-lloyd.jpg?itok=bb72IeLf";

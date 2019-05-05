@@ -40,7 +40,7 @@ public class AccountSettingActivity extends AppCompatActivity {
         mRelativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout1);
 
         setupSettingsList();
-        setupBottomNavigationView();
+        //setupBottomNavigationView();
         setupFragments();
 
         //set up backarrow for navigating back to 'ProfileActivity'

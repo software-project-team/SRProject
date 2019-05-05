@@ -11,10 +11,10 @@ import java.util.List;
  * Class that stores fragments for tabs
  */
 
-public class SectionPagerAdapter extends FragmentStatePagerAdapter {
-    private static final String TAG = "SectionPagerAdapter";
+public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
+    private static final String TAG = "SectionsPagerAdapter";
     private final List<Fragment> mFragmentList=new ArrayList<>();
-    public SectionPagerAdapter(FragmentManager fm) {
+    public SectionsPagerAdapter(FragmentManager fm) {
         super(fm);
     }
 
