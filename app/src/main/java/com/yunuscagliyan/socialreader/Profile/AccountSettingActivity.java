@@ -1,6 +1,8 @@
 package com.yunuscagliyan.socialreader.Profile;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
@@ -18,6 +20,7 @@ import android.widget.RelativeLayout;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.yunuscagliyan.socialreader.R;
 import com.yunuscagliyan.socialreader.Utils.BottomNavigationViewHelper;
+import com.yunuscagliyan.socialreader.Utils.FirebaseMethods;
 import com.yunuscagliyan.socialreader.Utils.SectionsStatePagerAdapter;
 
 import java.util.ArrayList;
@@ -42,6 +45,7 @@ public class AccountSettingActivity extends AppCompatActivity {
         setupSettingsList();
         //setupBottomNavigationView();
         setupFragments();
+        getIncomingIntent();
 
         //set up backarrow for navigating back to 'ProfileActivity'
         ImageView backArrow=findViewById(R.id.backArrow);
@@ -52,6 +56,39 @@ public class AccountSettingActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private void getIncomingIntent(){
+        Intent intent = getIntent();/*
+
+        if(intent.hasExtra(getString(R.string.selected_image))
+                || intent.hasExtra(getString(R.string.selected_bitmap))){
+
+            //if there is an imageUrl attached as an extra, then it was chosen from the gallery/photo fragment
+            Log.d(TAG, "getIncomingIntent: New incoming imgUrl");
+            if(intent.getStringExtra(getString(R.string.return_to_fragment)).equals(getString(R.string.edit_profile_fragment))){
+
+                if(intent.hasExtra(getString(R.string.selected_image))){
+                    //set the new profile picture
+                    FirebaseMethods firebaseMethods = new FirebaseMethods(AccountSettingActivity.this);
+                    firebaseMethods.uploadNewPhoto(getString(R.string.profile_photo), null, 0,
+                            intent.getStringExtra(getString(R.string.selected_image)), null);
+                }
+                else if(intent.hasExtra(getString(R.string.selected_bitmap))){
+                    //set the new profile picture
+                    FirebaseMethods firebaseMethods = new FirebaseMethods(AccountSettingActivity.this);
+                    firebaseMethods.uploadNewPhoto(getString(R.string.profile_photo), null, 0,
+                            null,(Bitmap) intent.getParcelableExtra(getString(R.string.selected_bitmap)));
+                }
+
+            }
+
+        }*/
+
+        if(intent.hasExtra(getString(R.string.calling_activity))){
+            Log.d(TAG, "getIncomingIntent: received incoming intent from " + getString(R.string.profile_activity));
+            setViewPager(pagerAdapter.getFragmentNumber(getString(R.string.edit_profile_fragment)));
+        }
     }
     private void setupFragments(){
         pagerAdapter = new SectionsStatePagerAdapter(getSupportFragmentManager());
@@ -98,4 +135,5 @@ public class AccountSettingActivity extends AppCompatActivity {
         menuItem.setChecked(true);
 
     }
+
 }
