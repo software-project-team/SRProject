@@ -83,15 +83,10 @@ public class NextActivity extends AppCompatActivity {
                     bitmap = (Bitmap) intent.getParcelableExtra(getString(R.string.selected_bitmap));
                  //   mFirebaseMethods.uploadNewPhoto(getString(R.string.new_photo), caption, imageCount, null,bitmap);
                 }
-
-
-
             }
         });
-
         setImage();
     }
-
     private void someMethod(){
         /*
             Step 1)
@@ -168,7 +163,7 @@ public class NextActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-             //   imageCount = mFirebaseMethods.getImageCount(dataSnapshot);
+                imageCount = mFirebaseMethods.getImageCount(dataSnapshot);
                 Log.d(TAG, "onDataChange: image count: " + imageCount);
 
             }

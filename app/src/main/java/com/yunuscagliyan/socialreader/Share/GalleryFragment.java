@@ -20,36 +20,46 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.yunuscagliyan.socialreader.Profile.AccountSettingActivity;
 import com.yunuscagliyan.socialreader.R;
 import com.yunuscagliyan.socialreader.Utils.FilePaths;
 import com.yunuscagliyan.socialreader.Utils.FileSearch;
 import com.yunuscagliyan.socialreader.Utils.GridImageAdapter;
+
 import java.util.ArrayList;
+
 
 public class GalleryFragment extends Fragment {
     private static final String TAG = "GalleryFragment";
+
+
     //constants
     private static final int NUM_GRID_COLUMNS = 3;
+
+
     //widgets
     private GridView gridView;
     private ImageView galleryImage;
     private ProgressBar mProgressBar;
     private Spinner directorySpinner;
+
     //vars
     private ArrayList<String> directories;
     private String mAppend = "file:/";
     private String mSelectedImage;
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_gallery, container, false);
-        Log.d(TAG, "onCreateView: started.");
         galleryImage = (ImageView) view.findViewById(R.id.galleryImageView);
         gridView = (GridView) view.findViewById(R.id.gridView);
         directorySpinner = (Spinner) view.findViewById(R.id.spinnerDirectory);
         mProgressBar = (ProgressBar) view.findViewById(R.id.progressBar);
         mProgressBar.setVisibility(View.GONE);
         directories = new ArrayList<>();
+        Log.d(TAG, "onCreateView: started.");
 
         ImageView shareClose = (ImageView) view.findViewById(R.id.ivCloseShare);
         shareClose.setOnClickListener(new View.OnClickListener() {
@@ -59,37 +69,34 @@ public class GalleryFragment extends Fragment {
                 getActivity().finish();
             }
         });
+
+
         TextView nextScreen = (TextView) view.findViewById(R.id.tvNext);
         nextScreen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: navigating to the final share screen.");
 
-                Intent intent = new Intent(getActivity(),NextActivity.class);
-                intent.putExtra(getString(R.string.selected_image),mSelectedImage);
-                startActivity(intent);
-            }
-        });
-        init();
-        return view;
-    }
-/*
                 if(isRootTask()){
                     Intent intent = new Intent(getActivity(), NextActivity.class);
                     intent.putExtra(getString(R.string.selected_image), mSelectedImage);
                     startActivity(intent);
                 }else{
-                    Intent intent = new Intent(getActivity(), AccountSettingsActivity.class);
+                    Intent intent = new Intent(getActivity(), AccountSettingActivity.class);
                     intent.putExtra(getString(R.string.selected_image), mSelectedImage);
                     intent.putExtra(getString(R.string.return_to_fragment), getString(R.string.edit_profile_fragment));
                     startActivity(intent);
                     getActivity().finish();
                 }
+
             }
         });
+
         init();
+
         return view;
     }
+
     private boolean isRootTask(){
         if(((ShareActivity)getActivity()).getTask() == 0){
             return true;
@@ -98,17 +105,16 @@ public class GalleryFragment extends Fragment {
             return false;
         }
     }
-*/
-    private void init() {
+
+    private void init(){
         FilePaths filePaths = new FilePaths();
+
         //check for other folders indide "/storage/emulated/0/pictures"
         if (FileSearch.getDirectoryPaths(filePaths.PICTURES) != null) {
             directories = FileSearch.getDirectoryPaths(filePaths.PICTURES);
-             directories.add(filePaths.CAMERA);
         }
+        directories.add(filePaths.CAMERA);
 
-        //  directories.add(filePaths.DOWNLOAD);
-        //   directories.add(filePaths.FIREBASE_IMAGE_STORAGE);
         ArrayList<String> directoryNames = new ArrayList<>();
         for (int i = 0; i < directories.size(); i++) {
             Log.d(TAG, "init: directory: " + directories.get(i));
@@ -118,7 +124,7 @@ public class GalleryFragment extends Fragment {
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_spinner_item, directories);
+                android.R.layout.simple_spinner_item, directoryNames);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         directorySpinner.setAdapter(adapter);
 
@@ -128,29 +134,38 @@ public class GalleryFragment extends Fragment {
                 Log.d(TAG, "onItemClick: selected: " + directories.get(position));
 
                 //setup our image grid for the directory chosen
-               setupGridView(directories.get(position));
+                setupGridView(directories.get(position));
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
     }
+
+
     private void setupGridView(String selectedDirectory){
         Log.d(TAG, "setupGridView: directory chosen: " + selectedDirectory);
         final ArrayList<String> imgURLs = FileSearch.getFilePaths(selectedDirectory);
+
         //set the grid column width
         int gridWidth = getResources().getDisplayMetrics().widthPixels;
         int imageWidth = gridWidth/NUM_GRID_COLUMNS;
         gridView.setColumnWidth(imageWidth);
+
         //use the grid adapter to adapter the images to gridview
         GridImageAdapter adapter = new GridImageAdapter(getActivity(), R.layout.layout_grid_imageview, mAppend, imgURLs);
         gridView.setAdapter(adapter);
+
         //set the first image to be displayed when the activity fragment view is inflated
-     //   try{
+        try{
             setImage(imgURLs.get(0), galleryImage, mAppend);
             mSelectedImage = imgURLs.get(0);
-     //   }catch (ArrayIndexOutOfBoundsException e){
-         //   Log.e(TAG, "setupGridView: ArrayIndexOutOfBoundsException: " +e.getMessage() );
+        }catch (ArrayIndexOutOfBoundsException e){
+            Log.e(TAG, "setupGridView: ArrayIndexOutOfBoundsException: " +e.getMessage() );
+        }
+
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -160,7 +175,9 @@ public class GalleryFragment extends Fragment {
                 mSelectedImage = imgURLs.get(position);
             }
         });
+
     }
+
 
     private void setImage(String imgURL, ImageView image, String append){
         Log.d(TAG, "setImage: setting image");
@@ -190,3 +207,4 @@ public class GalleryFragment extends Fragment {
         });
     }
 }
+

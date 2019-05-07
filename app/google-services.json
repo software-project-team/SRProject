@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "991867815629",
+    "firebase_url": "https://social-reader-c5aa8.firebaseio.com",
+    "project_id": "social-reader-c5aa8",
+    "storage_bucket": "social-reader-c5aa8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:991867815629:android:da8e7418023a68ce",
+        "android_client_info": {
+          "package_name": "com.yunuscagliyan.socialreader"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "991867815629-qbu61vq2scj3ui1gfrtugb96i3nn089g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yunuscagliyan.socialreader",
+            "certificate_hash": "f8e98dc8a57b3ba8c57687e1dfa166f88b69dc05"
+          }
+        },
+        {
+          "client_id": "991867815629-spr582gj9or18p300nf0eib5721ajsdb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvrkeb4HZ_gnprmVtf2YOkBulEbReFxNo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "991867815629-spr582gj9or18p300nf0eib5721ajsdb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
