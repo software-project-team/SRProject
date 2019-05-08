@@ -77,11 +77,11 @@ public class NextActivity extends AppCompatActivity {
 
                 if(intent.hasExtra(getString(R.string.selected_image))){
                     imgUrl = intent.getStringExtra(getString(R.string.selected_image));
-                 //   mFirebaseMethods.uploadNewPhoto(getString(R.string.new_photo), caption, imageCount, imgUrl,null);
+                    mFirebaseMethods.uploadNewPhoto(getString(R.string.new_photo), caption, imageCount, imgUrl,null);
                 }
                 else if(intent.hasExtra(getString(R.string.selected_bitmap))){
                     bitmap = (Bitmap) intent.getParcelableExtra(getString(R.string.selected_bitmap));
-                 //   mFirebaseMethods.uploadNewPhoto(getString(R.string.new_photo), caption, imageCount, null,bitmap);
+                    mFirebaseMethods.uploadNewPhoto(getString(R.string.new_photo), caption, imageCount, null,bitmap);
                 }
             }
         });

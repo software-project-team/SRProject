@@ -79,7 +79,6 @@ public class FirebaseMethods {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     Uri firebaseUrl = Uri.parse(taskSnapshot.getMetadata().getReference().getDownloadUrl().toString());
-
                     Toast.makeText(mContext, "photo upload success", Toast.LENGTH_SHORT).show();
 
                     //add the new photo to 'photos' node and 'user_photos' node
