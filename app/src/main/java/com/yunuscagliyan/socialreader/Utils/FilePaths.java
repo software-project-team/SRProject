@@ -14,6 +14,6 @@ public class FilePaths {
     public String DOWNLOAD = ROOT_DIR+ "/document/image";
 
 
-    public String FIREBASE_IMAGE_STORAGE = "photos/users/";
+    public String FIREBASE_IMAGE_STORAGE = "photo/users/";
 
 }
