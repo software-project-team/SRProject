@@ -7,35 +7,36 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.yunuscagliyan.socialreader.R;
 import com.yunuscagliyan.socialreader.Utils.BottomNavigationViewHelper;
 
-public class LikesActivity extends AppCompatActivity {
+
+public class LikesActivity extends AppCompatActivity{
     private static final String TAG = "LikesActivity";
-    private final Context mContext=LikesActivity.this;
-    private static final int ACTIVITY_NUMBER=3;
+    private static final int ACTIVITY_NUM = 3;
+
+    private Context mContext = LikesActivity.this;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        Log.d(TAG,"onCreate:started");
-        //setupBottomNavigationView();
+        Log.d(TAG, "onCreate: started.");
+
+       // setupBottomNavigationView();
     }
-    /**
-     * BottomNavigationView set up
-     */
+
+    /*
+     * BottomNavigationView setup
+
     private void setupBottomNavigationView(){
-        Log.d(TAG,"setupBottomNavigationView:setting up BottomNavigationView");
-        BottomNavigationViewEx bottomNavViewBar=findViewById(R.id.bottomNavViewBar);
-        BottomNavigationViewHelper.setupBottomNavigationView(bottomNavViewBar);
-        BottomNavigationViewHelper.enableNavigation(mContext,bottomNavViewBar);
-
-        Menu menu=bottomNavViewBar.getMenu();
-        MenuItem menuItem=menu.getItem(ACTIVITY_NUMBER);
-        menuItem.setChecked(true);
-
-
+        Log.d(TAG, "setupBottomNavigationView: setting up BottomNavigationView");
+        BottomNavigationViewEx bottomNavigationViewEx = (BottomNavigationViewEx) findViewById(R.id.bottomNavViewBar);
+        BottomNavigationViewHelper.setupBottomNavigationView(bottomNavigationViewEx);
+        BottomNavigationViewHelper.enableNavigation(mContext, this,BottomNavigationViewEx);
+        Menu menu = bottomNavigationViewEx.getMenu();
+        MenuItem menuItem = menu.getItem(ACTIVITY_NUM);
+        menuItem.setChecked(true);*/
     }
-}
+
