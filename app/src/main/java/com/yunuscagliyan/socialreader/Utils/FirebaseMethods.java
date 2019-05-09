@@ -1,12 +1,10 @@
 package com.yunuscagliyan.socialreader.Utils;
 
-import android.accounts.Account;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -18,11 +16,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -35,9 +30,7 @@ import com.yunuscagliyan.socialreader.models.User;
 import com.yunuscagliyan.socialreader.models.UserAccountSettings;
 import com.yunuscagliyan.socialreader.models.UserSettings;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -81,7 +74,7 @@ public class FirebaseMethods {
 
             String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
             StorageReference storageReference = mStorageReference
-                    .child(filePaths.FIREBASE_IMAGE_STORAGE + "/" + user_id + "/photo" + (count + 1));
+                    .child(filePaths.FIREBASE_IMAGE_STORAGE + "/" + user_id + "/photos" + (count + 1));
 
             //convert image url to bitmap
             if(bm == null){
@@ -93,13 +86,13 @@ public class FirebaseMethods {
             UploadTask uploadTask = null;
             uploadTask = storageReference.putBytes(bytes);
 
-            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Task<Uri> firebaseUrl = taskSnapshot.getMetadata().getReference().getDownloadUrl();
-                    Log.d(TAG, "qqqqqqqqq:"+firebaseUrl);
+                public void onSuccess(Uri uri) {
+                    String firebaseUrl = uri.toString();
+                    Log.d("TAG", String.valueOf(uri));
+                    
 
-                  //  Uri firebaseUrl =Uri.parse(taskSnapshot.getMetadata().getReference().getDownloadUrl().toString());
                     Toast.makeText(mContext, "photo upload success", Toast.LENGTH_SHORT).show();
 
                     //add the new photo to 'photos' node and 'user_photos' node
@@ -115,19 +108,7 @@ public class FirebaseMethods {
                     Log.d(TAG, "onFailure: Photo upload failed.");
                     Toast.makeText(mContext, "Photo upload failed ", Toast.LENGTH_SHORT).show();
                 }
-            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                    double progress = (100 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
-
-                    if(progress - 15 > mPhotoUploadProgress){
-                        Toast.makeText(mContext, "photo upload progress: " + String.format("%.0f", progress) + "%", Toast.LENGTH_SHORT).show();
-                        mPhotoUploadProgress = progress;
-                    }
-
-                    Log.d(TAG, "onProgress: upload progress: " + progress + "% done");
-                }
-            });
+           });
 
         }
         //case new profile photo
@@ -148,12 +129,11 @@ public class FirebaseMethods {
             UploadTask uploadTask = null;
             uploadTask = storageReference.putBytes(bytes);
 
-            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    // Uri firebaseUrl = taskSnapshot.getDownloadUrl();
-                    Task<Uri> firebaseUrl = taskSnapshot.getMetadata().getReference().getDownloadUrl();
-                    Log.d(TAG, "qqqqqqqqq:"+firebaseUrl);
+                public void onSuccess(Uri uri) {
+                    String firebaseUrl = uri.toString();
+                    Log.d("TAG", String.valueOf(uri));
                     Toast.makeText(mContext, "photo upload success", Toast.LENGTH_SHORT).show();
 
                     //insert into 'user_account_settings' node
@@ -170,18 +150,6 @@ public class FirebaseMethods {
                 public void onFailure(@NonNull Exception e) {
                     Log.d(TAG, "onFailure: Photo upload failed.");
                     Toast.makeText(mContext, "Photo upload failed ", Toast.LENGTH_SHORT).show();
-                }
-            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                    double progress = (100 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
-
-                    if(progress - 15 > mPhotoUploadProgress){
-                        Toast.makeText(mContext, "photo upload progress: " + String.format("%.0f", progress) + "%", Toast.LENGTH_SHORT).show();
-                        mPhotoUploadProgress = progress;
-                    }
-
-                    Log.d(TAG, "onProgress: upload progress: " + progress + "% done");
                 }
             });
         }
@@ -451,11 +419,11 @@ public class FirebaseMethods {
                                     .getValue(UserAccountSettings.class)
                                     .getWebsite()
                     );
-               /*     settings.setDescription(
+                   settings.setDescription(
                             ds.child(userID)
                                     .getValue(UserAccountSettings.class)
                                     .getDescription()
-                    );*/
+                    );
                     settings.setProfile_photo(
                             ds.child(userID)
                                     .getValue(UserAccountSettings.class)
