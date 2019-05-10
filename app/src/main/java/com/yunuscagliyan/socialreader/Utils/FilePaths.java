@@ -3,7 +3,6 @@ package com.yunuscagliyan.socialreader.Utils;
 import android.content.Context;
 import android.os.Environment;
 
-
 public class FilePaths {
 
     //"storage/emulated/0"
@@ -11,9 +10,7 @@ public class FilePaths {
 
     public String PICTURES = ROOT_DIR + "/Pictures";
     public String CAMERA = ROOT_DIR + "/DCIM/camera";
-    public String DOWNLOAD = ROOT_DIR+ "/document/image";
 
-
-    public String FIREBASE_IMAGE_STORAGE = "photo/users/";
+    public String FIREBASE_IMAGE_STORAGE = "photos/users/";
 
 }

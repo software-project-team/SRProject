@@ -1,10 +1,8 @@
 package com.yunuscagliyan.socialreader.Utils;
 
-import android.app.ProgressDialog;
 
 import java.io.File;
 import java.util.ArrayList;
-
 
 public class FileSearch {
 
@@ -24,6 +22,7 @@ public class FileSearch {
         }
         return pathArray;
     }
+
     /**
      * Search a directory and return a list of all **files** contained inside
      * @param directory

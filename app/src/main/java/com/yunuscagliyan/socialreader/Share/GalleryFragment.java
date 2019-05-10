@@ -3,7 +3,6 @@ package com.yunuscagliyan.socialreader.Share;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -20,7 +19,7 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
-import com.yunuscagliyan.socialreader.Profile.AccountSettingActivity;
+import com.yunuscagliyan.socialreader.Profile.AccountSettingsActivity;
 import com.yunuscagliyan.socialreader.R;
 import com.yunuscagliyan.socialreader.Utils.FilePaths;
 import com.yunuscagliyan.socialreader.Utils.FileSearch;
@@ -82,7 +81,7 @@ public class GalleryFragment extends Fragment {
                     intent.putExtra(getString(R.string.selected_image), mSelectedImage);
                     startActivity(intent);
                 }else{
-                    Intent intent = new Intent(getActivity(), AccountSettingActivity.class);
+                    Intent intent = new Intent(getActivity(), AccountSettingsActivity.class);
                     intent.putExtra(getString(R.string.selected_image), mSelectedImage);
                     intent.putExtra(getString(R.string.return_to_fragment), getString(R.string.edit_profile_fragment));
                     startActivity(intent);

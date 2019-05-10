@@ -3,7 +3,6 @@ package com.yunuscagliyan.socialreader.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-
 public class UserAccountSettings implements Parcelable{
 
     private String description;

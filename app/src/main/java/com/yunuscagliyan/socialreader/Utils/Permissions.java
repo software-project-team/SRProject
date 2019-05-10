@@ -2,6 +2,7 @@ package com.yunuscagliyan.socialreader.Utils;
 
 import android.Manifest;
 
+
 public class Permissions {
 
     public static final String[] PERMISSIONS = {

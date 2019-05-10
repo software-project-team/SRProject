@@ -18,9 +18,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.yunuscagliyan.socialreader.Login.LoginActivity;
 import com.yunuscagliyan.socialreader.R;
 
-import java.net.Inet4Address;
-
-
 public class SignOutFragment extends Fragment {
 
     private static final String TAG = "SignOutFragment";

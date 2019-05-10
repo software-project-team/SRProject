@@ -4,7 +4,6 @@ package com.yunuscagliyan.socialreader.Profile;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -36,14 +35,11 @@ import com.yunuscagliyan.socialreader.Utils.FirebaseMethods;
 import com.yunuscagliyan.socialreader.Utils.GridImageAdapter;
 import com.yunuscagliyan.socialreader.Utils.UniversalImageLoader;
 import com.yunuscagliyan.socialreader.models.Photo;
+import com.yunuscagliyan.socialreader.models.User;
 import com.yunuscagliyan.socialreader.models.UserAccountSettings;
 import com.yunuscagliyan.socialreader.models.UserSettings;
 
-import org.w3c.dom.Comment;
-
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -51,6 +47,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ProfileFragment extends Fragment {
 
     private static final String TAG = "ProfileFragment";
+
+    public interface OnGridImageSelectedListener{
+        void onGridImageSelected(Photo photo, int activityNumber);
+    }
+    OnGridImageSelectedListener mOnGridImageSelectedListener;
 
     private static final int ACTIVITY_NUM = 4;
     private static final int NUM_GRID_COLUMNS = 3;
@@ -105,15 +106,15 @@ public class ProfileFragment extends Fragment {
         setupFirebaseAuth();
         setupGridView();
 
-        TextView editProfile = (TextView) view.findViewById(R.id.tvEditProfile);
+        TextView editProfile = (TextView) view.findViewById(R.id.textEditProfile);
         editProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: navigating to " + mContext.getString(R.string.edit_profile_fragment));
-                Intent intent = new Intent(getActivity(), AccountSettingActivity.class);
+                Intent intent = new Intent(getActivity(), AccountSettingsActivity.class);
                 intent.putExtra(getString(R.string.calling_activity), getString(R.string.profile_activity));
                 startActivity(intent);
-               // getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
 
@@ -121,7 +122,17 @@ public class ProfileFragment extends Fragment {
         return view;
     }
 
-    private void setupGridView(){
+    @Override
+    public void onAttach(Context context) {
+        try{
+            mOnGridImageSelectedListener = (OnGridImageSelectedListener) getActivity();
+        }catch (ClassCastException e){
+            Log.e(TAG, "onAttach: ClassCastException: " + e.getMessage() );
+        }
+        super.onAttach(context);
+    }
+
+    private void setupGridView() {
         Log.d(TAG, "setupGridView: Setting up image grid.");
 
         final ArrayList<Photo> photos = new ArrayList<>();
@@ -132,23 +143,30 @@ public class ProfileFragment extends Fragment {
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for ( DataSnapshot singleSnapshot :  dataSnapshot.getChildren()){
-                    photos.add(singleSnapshot.getValue(Photo.class));}
-
+                for (DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
+                    photos.add(singleSnapshot.getValue(Photo.class));
+                }
 
                 //setup our image grid
                 int gridWidth = getResources().getDisplayMetrics().widthPixels;
-                int imageWidth = gridWidth/NUM_GRID_COLUMNS;
+                int imageWidth = gridWidth / NUM_GRID_COLUMNS;
                 gridView.setColumnWidth(imageWidth);
 
                 ArrayList<String> imgUrls = new ArrayList<String>();
-                for(int i = 0; i < photos.size(); i++){
+                for (int i = 0; i < photos.size(); i++) {
                     imgUrls.add(photos.get(i).getImage_path());
                 }
-                GridImageAdapter adapter = new GridImageAdapter(getActivity(),R.layout.layout_grid_imageview,
+                GridImageAdapter adapter = new GridImageAdapter(getActivity(), R.layout.layout_grid_imageview,
                         "", imgUrls);
                 gridView.setAdapter(adapter);
 
+                gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        mOnGridImageSelectedListener.onGridImageSelected(photos.get(position),ACTIVITY_NUM);
+                    }
+                });
             }
 
             @Override
@@ -163,7 +181,7 @@ public class ProfileFragment extends Fragment {
        // Log.d(TAG, "setProfileWidgets: setting widgets with data retrieving from firebase database: " + userSettings.getSettings().getUsername());
 
 
-        //User user = userSettings.getUser();
+        User user = userSettings.getUser();
         UserAccountSettings settings = userSettings.getSettings();
 
         UniversalImageLoader.setImage(settings.getProfile_photo(), mProfilePhoto, null, "");
@@ -185,8 +203,9 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: navigating to account settings.");
-                Intent intent = new Intent(mContext, AccountSettingActivity.class);
+                Intent intent = new Intent(mContext, AccountSettingsActivity.class);
                 startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
     }
@@ -194,7 +213,7 @@ public class ProfileFragment extends Fragment {
     private void setupBottomNavigationView(){
         Log.d(TAG, "setupBottomNavigationView: setting up BottomNavigationView");
         BottomNavigationViewHelper.setupBottomNavigationView(bottomNavigationView);
-        BottomNavigationViewHelper.enableNavigation(mContext,bottomNavigationView);
+        BottomNavigationViewHelper.enableNavigation(mContext,getActivity(),bottomNavigationView);
         Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem = menu.getItem(ACTIVITY_NUM);
         menuItem.setChecked(true);

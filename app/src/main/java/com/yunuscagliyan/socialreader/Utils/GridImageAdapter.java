@@ -8,14 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
+
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.yunuscagliyan.socialreader.R;
 
 import java.util.ArrayList;
+
 
 public class GridImageAdapter extends ArrayAdapter<String>{
 
@@ -35,13 +36,14 @@ public class GridImageAdapter extends ArrayAdapter<String>{
     }
 
     private static class ViewHolder{
-        SqaureImageView image;
+        SquareImageView image;
         ProgressBar mProgressBar;
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+
         /*
         Viewholder build pattern (Similar to recyclerview)
          */
@@ -50,14 +52,18 @@ public class GridImageAdapter extends ArrayAdapter<String>{
             convertView = mInflater.inflate(layoutResource, parent, false);
             holder = new ViewHolder();
             holder.mProgressBar = (ProgressBar) convertView.findViewById(R.id.gridImageProgressbar);
-            holder.image = (SqaureImageView) convertView.findViewById(R.id.gridImageView);
+            holder.image = (SquareImageView) convertView.findViewById(R.id.gridImageView);
+
             convertView.setTag(holder);
         }
         else{
             holder = (ViewHolder) convertView.getTag();
         }
+
         String imgURL = getItem(position);
+
         ImageLoader imageLoader = ImageLoader.getInstance();
+
         imageLoader.displayImage(mAppend + imgURL, holder.image, new ImageLoadingListener() {
             @Override
             public void onLoadingStarted(String imageUri, View view) {

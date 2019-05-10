@@ -25,6 +25,7 @@ import com.yunuscagliyan.socialreader.R;
 import com.yunuscagliyan.socialreader.Utils.FirebaseMethods;
 import com.yunuscagliyan.socialreader.Utils.UniversalImageLoader;
 
+
 public class NextActivity extends AppCompatActivity {
 
     private static final String TAG = "NextActivity";
@@ -50,7 +51,6 @@ public class NextActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_next);
-        Log.d(TAG, "onCreate: got the chosen image"+getIntent().getStringExtra(getString(R.string.selected_image)));
         mFirebaseMethods = new FirebaseMethods(NextActivity.this);
         mCaption = (EditText) findViewById(R.id.caption) ;
 
@@ -83,10 +83,15 @@ public class NextActivity extends AppCompatActivity {
                     bitmap = (Bitmap) intent.getParcelableExtra(getString(R.string.selected_bitmap));
                     mFirebaseMethods.uploadNewPhoto(getString(R.string.new_photo), caption, imageCount, null,bitmap);
                 }
+
+
+
             }
         });
+
         setImage();
     }
+
     private void someMethod(){
         /*
             Step 1)

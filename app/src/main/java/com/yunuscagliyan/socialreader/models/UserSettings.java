@@ -1,14 +1,20 @@
 package com.yunuscagliyan.socialreader.models;
 
 
+import android.util.Log;
+
+import static android.support.constraint.Constraints.TAG;
+
 public class UserSettings {
 
     private User user;
     private UserAccountSettings settings;
 
     public UserSettings(User user, UserAccountSettings settings) {
+
         this.user = user;
         this.settings = settings;
+        Log.d(TAG, "qqqqqqqqqqqqqqqqqq");
     }
 
     public UserSettings() {

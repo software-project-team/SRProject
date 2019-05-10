@@ -1,10 +1,12 @@
 package com.yunuscagliyan.socialreader.Utils;
 
+import android.accounts.Account;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -16,14 +18,17 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.yunuscagliyan.socialreader.Home.HomeActivity;
-import com.yunuscagliyan.socialreader.Profile.AccountSettingActivity;
+import com.yunuscagliyan.socialreader.Profile.AccountSettingsActivity;
 import com.yunuscagliyan.socialreader.R;
 import com.yunuscagliyan.socialreader.models.Photo;
 import com.yunuscagliyan.socialreader.models.User;
@@ -31,6 +36,7 @@ import com.yunuscagliyan.socialreader.models.UserAccountSettings;
 import com.yunuscagliyan.socialreader.models.UserSettings;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -74,7 +80,7 @@ public class FirebaseMethods {
 
             String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
             StorageReference storageReference = mStorageReference
-                    .child(filePaths.FIREBASE_IMAGE_STORAGE + "/" + user_id + "/photos" + (count + 1));
+                    .child(filePaths.FIREBASE_IMAGE_STORAGE + "/" + user_id + "/photo" + (count + 1));
 
             //convert image url to bitmap
             if(bm == null){
@@ -91,7 +97,6 @@ public class FirebaseMethods {
                 public void onSuccess(Uri uri) {
                     String firebaseUrl = uri.toString();
                     Log.d("TAG", String.valueOf(uri));
-                    
 
                     Toast.makeText(mContext, "photo upload success", Toast.LENGTH_SHORT).show();
 
@@ -108,7 +113,7 @@ public class FirebaseMethods {
                     Log.d(TAG, "onFailure: Photo upload failed.");
                     Toast.makeText(mContext, "Photo upload failed ", Toast.LENGTH_SHORT).show();
                 }
-           });
+            });
 
         }
         //case new profile photo
@@ -134,13 +139,14 @@ public class FirebaseMethods {
                 public void onSuccess(Uri uri) {
                     String firebaseUrl = uri.toString();
                     Log.d("TAG", String.valueOf(uri));
+
                     Toast.makeText(mContext, "photo upload success", Toast.LENGTH_SHORT).show();
 
                     //insert into 'user_account_settings' node
                     setProfilePhoto(firebaseUrl.toString());
 
-                    ((AccountSettingActivity)mContext).setViewPager(
-                            ((AccountSettingActivity)mContext).pagerAdapter
+                    ((AccountSettingsActivity)mContext).setViewPager(
+                            ((AccountSettingsActivity)mContext).pagerAdapter
                                     .getFragmentNumber(mContext.getString(R.string.edit_profile_fragment))
                     );
 
@@ -419,7 +425,7 @@ public class FirebaseMethods {
                                     .getValue(UserAccountSettings.class)
                                     .getWebsite()
                     );
-                   settings.setDescription(
+                    settings.setDescription(
                             ds.child(userID)
                                     .getValue(UserAccountSettings.class)
                                     .getDescription()
@@ -452,37 +458,38 @@ public class FirebaseMethods {
             }
 
 
-            // users node
-            Log.d(TAG, "getUserSettings: snapshot key: " + ds.getKey());
-            if(ds.getKey().equals(mContext.getString(R.string.dbname_users))) {
-                Log.d(TAG, "getUserAccountSettings: users node datasnapshot: " + ds);
+                // users node
+                Log.d(TAG, "getUserSettings: snapshot key: " + ds.getKey());
+                if(ds.getKey().equals(mContext.getString(R.string.dbname_users))) {
+                    Log.d(TAG, "getUserAccountSettings: users node datasnapshot: " + ds);
 
-                user.setUsername(
-                        ds.child(userID)
-                                .getValue(User.class)
-                                .getUsername()
-                );
-                user.setEmail(
-                        ds.child(userID)
-                                .getValue(User.class)
-                                .getEmail()
-                );
-                user.setPhone_number(
-                        ds.child(userID)
-                                .getValue(User.class)
-                                .getPhone_number()
-                );
-                user.setUser_id(
-                        ds.child(userID)
-                                .getValue(User.class)
-                                .getUser_id()
-                );
+                    user.setUsername(
+                            ds.child(userID)
+                                    .getValue(User.class)
+                                    .getUsername()
+                    );
+                    user.setEmail(
+                            ds.child(userID)
+                                    .getValue(User.class)
+                                    .getEmail()
+                    );
+                    user.setPhone_number(
+                            ds.child(userID)
+                                    .getValue(User.class)
+                                    .getPhone_number()
+                    );
+                    user.setUser_id(
+                            ds.child(userID)
+                                    .getValue(User.class)
+                                    .getUser_id()
+                    );
 
-                Log.d(TAG, "getUserAccountSettings: retrieved users information: " + user.toString());
-            }
+                    Log.d(TAG, "getUserAccountSettings: retrieved users information: " + user.toString());
+                }
         }
         return new UserSettings(user, settings);
 
     }
 
 }
+

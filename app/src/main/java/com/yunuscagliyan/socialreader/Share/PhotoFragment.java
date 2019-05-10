@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.yunuscagliyan.socialreader.Profile.AccountSettingActivity;
+import com.yunuscagliyan.socialreader.Profile.AccountSettingsActivity;
 import com.yunuscagliyan.socialreader.R;
 import com.yunuscagliyan.socialreader.Utils.Permissions;
 
@@ -87,7 +87,7 @@ public class PhotoFragment extends Fragment {
             }else{
                try{
                    Log.d(TAG, "onActivityResult: received new bitmap from camera: " + bitmap);
-                   Intent intent = new Intent(getActivity(), AccountSettingActivity.class);
+                   Intent intent = new Intent(getActivity(), AccountSettingsActivity.class);
                    intent.putExtra(getString(R.string.selected_bitmap), bitmap);
                    intent.putExtra(getString(R.string.return_to_fragment), getString(R.string.edit_profile_fragment));
                    startActivity(intent);
@@ -100,4 +100,5 @@ public class PhotoFragment extends Fragment {
         }
     }
 }
+
 

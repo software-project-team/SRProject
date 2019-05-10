@@ -37,12 +37,14 @@ import com.yunuscagliyan.socialreader.models.User;
 import com.yunuscagliyan.socialreader.models.UserAccountSettings;
 import com.yunuscagliyan.socialreader.models.UserSettings;
 
+import org.w3c.dom.Text;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.nostra13.universalimageloader.core.ImageLoader.TAG;
 
+public class EditProfileFragment extends Fragment implements
+        ConfirmPasswordDialog.OnConfirmPasswordListener{
 
-public class EditProfileFragment extends Fragment implements ConfirmPasswordDialog.OnConfirmPasswordListener{
 
     @Override
     public void onConfirmPassword(String password) {
@@ -95,9 +97,12 @@ public class EditProfileFragment extends Fragment implements ConfirmPasswordDial
                                 }
                             });
 
+
+
+
+
                         }else{
                             Log.d(TAG, "onComplete: re-authentication failed.");
-                            Toast.makeText(getActivity(), "re-authentication failed.", Toast.LENGTH_SHORT).show();
                         }
 
                     }
@@ -166,6 +171,10 @@ public class EditProfileFragment extends Fragment implements ConfirmPasswordDial
     }
 
 
+    /**
+     * Retrieves the data contained in the widgets and submits it to the database
+     * Before donig so it chekcs to make sure the username chosen is unqiue
+     */
     private void saveProfileSettings(){
         final String displayName = mDisplayName.getText().toString();
         final String username = mUsername.getText().toString();
@@ -175,17 +184,30 @@ public class EditProfileFragment extends Fragment implements ConfirmPasswordDial
         final long phoneNumber = Long.parseLong(mPhoneNumber.getText().toString());
 
 
+        //case1: if the user made a change to their username
+        if(!mUserSettings.getUser().getUsername().equals(username)){
+
+            checkIfUsernameExists(username);
+        }
+        //case2: if the user made a change to their email
+        if(!mUserSettings.getUser().getEmail().equals(email)){
+
+            // step1) Reauthenticate
+            //          -Confirm the password and email
+            ConfirmPasswordDialog dialog = new ConfirmPasswordDialog();
+            dialog.show(getFragmentManager(), getString(R.string.confirm_password_dialog));
+            dialog.setTargetFragment(EditProfileFragment.this, 1);
 
 
-              if(!mUserSettings.getUser().getUsername().equals(username)){
+            // step2) check if the email already is registered
+            //          -'fetchProvidersForEmail(String email)'
+            // step3) change the email
+            //          -submit the new email to the database and authentication
+        }
 
-                  checkIfUsernameExists(username);
-              }if(!mUserSettings.getUser().getEmail().equals(email)){
-
-                  ConfirmPasswordDialog dialog = new ConfirmPasswordDialog();
-                  dialog.show(getFragmentManager(), getString(R.string.confirm_password_dialog));
-                  dialog.setTargetFragment(EditProfileFragment.this, 1);
-                }
+        /**
+         * change the rest of the settings that do not require uniqueness
+         */
         if(!mUserSettings.getSettings().getDisplay_name().equals(displayName)){
             //update displayname
             mFirebaseMethods.updateUserAccountSettings(displayName, null, null, 0);
@@ -202,12 +224,14 @@ public class EditProfileFragment extends Fragment implements ConfirmPasswordDial
             //update phoneNumber
             mFirebaseMethods.updateUserAccountSettings(null, null, null, phoneNumber);
         }
-
-
-            }
+    }
 
 
 
+    /**
+     * Check is @param username already exists in teh database
+     * @param username
+     */
     private void checkIfUsernameExists(final String username) {
         Log.d(TAG, "checkIfUsernameExists: Checking if  " + username + " already exists.");
 

@@ -3,11 +3,13 @@ package com.yunuscagliyan.socialreader.Utils;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
 
 
 public class ImageManager {
@@ -46,5 +48,4 @@ public class ImageManager {
         return stream.toByteArray();
     }
 }
-
 

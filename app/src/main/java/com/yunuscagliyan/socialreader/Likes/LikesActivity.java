@@ -7,10 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.yunuscagliyan.socialreader.R;
 import com.yunuscagliyan.socialreader.Utils.BottomNavigationViewHelper;
-
 
 public class LikesActivity extends AppCompatActivity{
     private static final String TAG = "LikesActivity";
@@ -24,19 +24,19 @@ public class LikesActivity extends AppCompatActivity{
         setContentView(R.layout.activity_home);
         Log.d(TAG, "onCreate: started.");
 
-       // setupBottomNavigationView();
+        setupBottomNavigationView();
     }
 
-    /*
+    /**
      * BottomNavigationView setup
-
+     */
     private void setupBottomNavigationView(){
         Log.d(TAG, "setupBottomNavigationView: setting up BottomNavigationView");
         BottomNavigationViewEx bottomNavigationViewEx = (BottomNavigationViewEx) findViewById(R.id.bottomNavViewBar);
         BottomNavigationViewHelper.setupBottomNavigationView(bottomNavigationViewEx);
-        BottomNavigationViewHelper.enableNavigation(mContext, this,BottomNavigationViewEx);
+        BottomNavigationViewHelper.enableNavigation(mContext, this,bottomNavigationViewEx);
         Menu menu = bottomNavigationViewEx.getMenu();
         MenuItem menuItem = menu.getItem(ACTIVITY_NUM);
-        menuItem.setChecked(true);*/
+        menuItem.setChecked(true);
     }
-
+}
