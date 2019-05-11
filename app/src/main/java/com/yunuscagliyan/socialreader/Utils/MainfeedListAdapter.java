@@ -27,6 +27,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yunuscagliyan.socialreader.Home.HomeActivity;
 import com.yunuscagliyan.socialreader.Profile.ProfileActivity;
 import com.yunuscagliyan.socialreader.R;
+import com.yunuscagliyan.socialreader.groups.chatActivity;
 import com.yunuscagliyan.socialreader.models.Comment;
 import com.yunuscagliyan.socialreader.models.Like;
 import com.yunuscagliyan.socialreader.models.Photo;
@@ -119,7 +120,6 @@ public class MainfeedListAdapter extends ArrayAdapter<Photo> {
 
         //get the current users username (need for checking likes string)
         getCurrentUsername();
-
 
 
         //get likes string
@@ -238,6 +238,20 @@ public class MainfeedListAdapter extends ArrayAdapter<Photo> {
                 for(DataSnapshot singleSnapshot : dataSnapshot.getChildren()){
                     Log.d(TAG, "onDataChange: found user: " +
                     singleSnapshot.getValue(User.class).getUsername());
+                    holder.username.setText(singleSnapshot.getValue(UserAccountSettings.class).getUsername());
+                    holder.username.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Log.d(TAG, "onClick: navigating to profile of: " +
+                                    holder.user.getUsername());
+
+                            Intent intent = new Intent(mContext, ProfileActivity.class);
+                            intent.putExtra(mContext.getString(R.string.calling_activity),
+                                    mContext.getString(R.string.home_activity));
+                            intent.putExtra(mContext.getString(R.string.intent_user), holder.user);
+                            mContext.startActivity(intent);
+                        }
+                    });
 
                     holder.user = singleSnapshot.getValue(User.class);
                 }
@@ -547,32 +561,4 @@ public class MainfeedListAdapter extends ArrayAdapter<Photo> {
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

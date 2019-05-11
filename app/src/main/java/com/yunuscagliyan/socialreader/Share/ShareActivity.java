@@ -58,7 +58,6 @@ public class ShareActivity extends AppCompatActivity{
         adapter.addFragment(new GalleryFragment());
         adapter.addFragment(new PhotoFragment());
 
-     //   mViewPager = (ViewPager) findViewById(R.id.viewpager_container);
         mViewPager = (ViewPager) findViewById(R.id.viewpager_container);
 
         mViewPager.setAdapter(adapter);
@@ -126,16 +125,4 @@ public class ShareActivity extends AppCompatActivity{
         }
     }
 
-    /**
-     * BottomNavigationView setup
-     */
-    private void setupBottomNavigationView(){
-        Log.d(TAG, "setupBottomNavigationView: setting up BottomNavigationView");
-        BottomNavigationViewEx bottomNavigationViewEx = (BottomNavigationViewEx) findViewById(R.id.bottomNavViewBar);
-        BottomNavigationViewHelper.setupBottomNavigationView(bottomNavigationViewEx);
-        BottomNavigationViewHelper.enableNavigation(mContext,this, bottomNavigationViewEx);
-        Menu menu = bottomNavigationViewEx.getMenu();
-        MenuItem menuItem = menu.getItem(ACTIVITY_NUM);
-        menuItem.setChecked(true);
-    }
 }

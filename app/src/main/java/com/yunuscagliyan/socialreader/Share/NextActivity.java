@@ -92,25 +92,7 @@ public class NextActivity extends AppCompatActivity {
         setImage();
     }
 
-    private void someMethod(){
-        /*
-            Step 1)
-            Create a data model for Photos
 
-            Step 2)
-            Add properties to the Photo Objects (caption, date, imageUrl, photo_id, tags, user_id)
-
-            Step 3)
-            Count the number of photos that the user already has.
-
-            Step 4)
-            a) Upload the photo to Firebase Storage
-            b) insert into 'photos' node
-            c) insert into 'user_photos' node
-
-         */
-
-    }
 
 
     /**

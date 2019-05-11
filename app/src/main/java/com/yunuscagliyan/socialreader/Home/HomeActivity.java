@@ -27,7 +27,10 @@ import com.yunuscagliyan.socialreader.Utils.MainfeedListAdapter;
 import com.yunuscagliyan.socialreader.Utils.SectionsPagerAdapter;
 import com.yunuscagliyan.socialreader.Utils.UniversalImageLoader;
 import com.yunuscagliyan.socialreader.Utils.ViewCommentsFragment;
+import com.yunuscagliyan.socialreader.groups.chatActivity;
 import com.yunuscagliyan.socialreader.models.Photo;
+import com.yunuscagliyan.socialreader.models.User;
+import com.yunuscagliyan.socialreader.models.UserAccountSettings;
 
 public class HomeActivity extends AppCompatActivity implements
         MainfeedListAdapter.OnLoadMoreItemsListener{
@@ -36,7 +39,7 @@ public class HomeActivity extends AppCompatActivity implements
     public void onLoadMoreItems() {
         Log.d(TAG, "onLoadMoreItems: displaying more photos");
         HomeFragment fragment = (HomeFragment)getSupportFragmentManager()
-                .findFragmentByTag("android:switcher:" + R.id.viewpager_container + ":" + mViewPager.getCurrentItem());
+                .findFragmentByTag("android:switcher:" + R.id.container + ":" + mViewPager.getCurrentItem());
         if(fragment != null){
             fragment.displayMorePhotos();
         }
@@ -59,6 +62,7 @@ public class HomeActivity extends AppCompatActivity implements
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Log.d(TAG, "onCreate: starting.");
@@ -67,7 +71,6 @@ public class HomeActivity extends AppCompatActivity implements
         mRelativeLayout = (RelativeLayout) findViewById(R.id.relLayoutParent);
 
         setupFirebaseAuth();
-
         initImageLoader();
         setupBottomNavigationView();
         setupViewPager();

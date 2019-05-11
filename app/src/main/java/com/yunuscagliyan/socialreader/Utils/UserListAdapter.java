@@ -65,7 +65,7 @@ public class UserListAdapter extends ArrayAdapter<User>{
 
             holder.username = (TextView) convertView.findViewById(R.id.username);
             holder.email = (TextView) convertView.findViewById(R.id.email);
-         //   holder.profileImage = (CircleImageView) convertView.findViewById(R.id.profile_image);
+            holder.profileImage = (CircleImageView) convertView.findViewById(R.id.profile_image);
 
             convertView.setTag(holder);
         }else{
