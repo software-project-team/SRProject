@@ -1,0 +1,124 @@
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="20dp">
+
+
+
+
+            <!-- username section -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/changeProfilePhoto"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/grey_border_bottom"
+                android:id="@+id/relLayout1">
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/ic_book"
+                    android:layout_centerVertical="true"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Yerli Eserler"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="50dp"
+                    android:textSize="20dp"
+                    android:textStyle="bold"/>
+
+            </RelativeLayout>
+
+
+            <!-- display_name section -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/relLayout1"
+                android:background="@drawable/grey_border_bottom"
+                android:id="@+id/relLayout2"
+                android:layout_marginTop="15dp">
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/ic_book"
+                    android:layout_centerVertical="true"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Yabancı Eserler"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="50dp"
+                    android:textSize="20dp"
+                    android:textStyle="bold"/>
+
+            </RelativeLayout>
+
+
+            <!-- website section -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/relLayout2"
+                android:background="@drawable/grey_border_bottom"
+                android:id="@+id/relLayout3"
+                android:layout_marginTop="15dp">
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/ic_tirnak"
+                    android:layout_centerVertical="true"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Alıntılar"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="50dp"
+                    android:textSize="20dp"
+                    android:textStyle="bold"/>
+
+            </RelativeLayout>
+
+
+            <!-- description section -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/relLayout3"
+                android:background="@drawable/grey_border_bottom"
+                android:id="@+id/relLayout4"
+                android:layout_marginTop="15dp">
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/ic_chat"
+                    android:layout_centerVertical="true"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Konu Dışı"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="50dp"
+                    android:textSize="20dp"
+                    android:textStyle="bold"/>
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+
+
+    </ScrollView>
