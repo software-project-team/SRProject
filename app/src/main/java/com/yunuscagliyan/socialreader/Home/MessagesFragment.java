@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.yunuscagliyan.socialreader.R;
 import com.yunuscagliyan.socialreader.groups.GroupsActivity;
 import com.yunuscagliyan.socialreader.groups.chatActivity;
+import com.yunuscagliyan.socialreader.groups.konud;
 
 
 public class MessagesFragment extends Fragment {
@@ -30,9 +31,9 @@ public class MessagesFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(getActivity(), chatActivity.class);
-                intent.putExtra("group","Konu Dışı");
-                startActivity(intent);
+                Intent intent = new Intent(getActivity(), konud.class);
+             //   intent.putExtra("group","Konu Dışı");
+                getActivity().startActivity(intent);
 
             }
         });

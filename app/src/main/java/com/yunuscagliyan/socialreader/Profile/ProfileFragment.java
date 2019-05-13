@@ -150,7 +150,7 @@ public class ProfileFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
 
-                    photos.add(singleSnapshot.getValue(Photo.class));
+           //         photos.add(singleSnapshot.getValue(Photo.class));
                 }
 
                 //setup our image grid
