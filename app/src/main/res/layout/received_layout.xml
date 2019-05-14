@@ -5,20 +5,26 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_gravity="center"
-    android:clickable="true">
+    android:layout_gravity="center">
 
-    <TextView
-        android:id="@+id/received_textview"
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="asdsa"
-        android:padding="13dp"
-        android:textStyle="bold"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:layout_marginRight="70dp"
-        android:background="@drawable/income"/>
+        android:layout_marginTop="10dp"
+        android:background="@drawable/grey_border_bottom"
+        android:id="@+id/relLayout1">
 
+        <TextView
+            android:id="@+id/received_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:padding="13dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="50dp"
+            android:textSize="20dp"
+            android:textStyle="bold"/>
 
+    </RelativeLayout>
 </LinearLayout>
