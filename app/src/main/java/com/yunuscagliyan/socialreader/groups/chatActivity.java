@@ -116,7 +116,7 @@ public class chatActivity extends AppCompatActivity {
 
         final Map messageMap = new HashMap();
         messageMap.put("text", text);
-        // messageMap.put("from",userName);
+         //messageMap.put("from",userName);
         reference.child("gruplar").child(group).child(key).setValue(messageMap).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

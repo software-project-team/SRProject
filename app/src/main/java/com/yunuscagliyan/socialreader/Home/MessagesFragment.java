@@ -31,8 +31,8 @@ public class MessagesFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(getActivity(), konud.class);
-             //   intent.putExtra("group","Konu Dışı");
+                Intent intent = new Intent(getActivity(), chatActivity.class);
+                intent.putExtra("group","Konu Dışı");
                 getActivity().startActivity(intent);
 
             }

@@ -8,36 +8,39 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="?attr/actionBarSize"
         android:gravity="center"
         android:id="@+id/ust"
-        android:background="@color/gray"
+        android:background="#42c8f4"
         android:layout_alignParentTop="true"
         android:orientation="horizontal">
         <ImageView
             android:layout_width="0dp"
             android:id="@+id/back"
-            android:layout_height="50dp"
+            android:layout_height="30dp"
             android:layout_weight="1"
-            android:background="@drawable/ic_backarrow"/>
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_backarrow"/>
         <TextView
             android:layout_width="0dp"
             android:id="@+id/chatname"
             android:textStyle="bold"
             android:textSize="20dp"
             android:layout_marginLeft="20dp"
-            android:text="asdfsaa"
+            android:text="Konu Dışı"
             android:layout_height="wrap_content"
             android:layout_weight="6"/>
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_above="@+id/alt"
         android:id="@+id/chatRecylerView"
+        android:layout_width="match_parent"
+        android:layout_height="606dp"
+        android:layout_above="@+id/alt"
         android:layout_below="@+id/ust"
-        android:background="@drawable/chat_back"
-        android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+        android:layout_marginTop="-11dp"
+        android:layout_marginBottom="0dp"
+        android:background="@drawable/chat_back"></android.support.v7.widget.RecyclerView>
 
 
     <LinearLayout
@@ -45,7 +48,7 @@
         android:layout_height="80dp"
         android:gravity="center"
         android:id="@+id/alt"
-        android:background="@color/gray"
+        android:background="#42c8f4"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal">
 
